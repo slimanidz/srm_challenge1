@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Page from "../components/Page";
 import { useAppContext } from "../components/AppContext";
 
-const client = () => {
+const Client = () => {
   const { clients, hrefClient } = useAppContext();
   console.log(hrefClient);
 
@@ -92,4 +92,4 @@ const client = () => {
   );
 };
 
-export default client;
+export default Client;

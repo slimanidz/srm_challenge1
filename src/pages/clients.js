@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import Page from "../components/Page";
 import { Field, Form, Formik } from "formik";
 import { useAppContext } from "../components/AppContext";
+import Link from "next/link";
 
 const initialValue = {
   nom1: "",
@@ -51,12 +52,11 @@ const Clients = () => {
         <div className="md:flex-row-reverse md:flex md:justify-between md:py-10 pb-5 ">
           <div className="w-full flex justify-between">
             <div className="text-white">.</div>
-            <a
-              className="order-last p-2 h-10 flex-end text font-bold text-white bg-blue-600 hover:bg-blue-500 active:bg-blue-400 rounded"
-              href="/add-client"
-            >
-              Ajouter un client
-            </a>
+            <Link href="/add-client">
+              <a className="order-last p-2 h-10 flex-end text font-bold text-white bg-blue-600 hover:bg-blue-500 active:bg-blue-400 rounded">
+                Ajouter un client
+              </a>
+            </Link>
           </div>
           <div>
             <h2 className="text-xl text-blue-600">Liste des clients</h2>

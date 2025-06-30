@@ -4,6 +4,7 @@ import Page from "../components/Page";
 import { useAppContext } from "../components/AppContext";
 import { formatLongDateTime } from "../components/Date";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 const initialValues = {
   nom: "",
@@ -98,14 +99,11 @@ const AddClient = () => {
                 >
                   submit{" "}
                 </button>
-
-                <a
-                  href="/clients"
-                  onClick={resetForm}
-                  className="hover:underline"
-                >
-                  annuler{" "}
-                </a>
+                <Link href="/clients">
+                  <a onClick={resetForm} className="hover:underline">
+                    annuler{" "}
+                  </a>
+                </Link>
               </div>
             </Form>
           )}
