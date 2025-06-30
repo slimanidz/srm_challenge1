@@ -59,8 +59,8 @@ export default function Home() {
           </div>
           <div>
             Pour connecter:
-            <p>username : "user"</p>
-            <p>password : "user"</p>
+            <p>username : &ldquo;user&ldquo;</p>
+            <p>password : &ldquo;user&ldquo;</p>
           </div>
         </Form>
       </Formik>
