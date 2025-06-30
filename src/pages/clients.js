@@ -91,7 +91,7 @@ const Clients = () => {
                 <th>nom</th>
                 <th>email</th>
                 <th> telephone</th>
-                <th>adresse</th>
+                <th>Date de creation</th>
                 <th></th>
               </tr>
             </thead>
@@ -120,7 +120,7 @@ const Clients = () => {
                   </td>
                   <td>
                     <div data-id={client.id} className="">
-                      {client.adresse}
+                      {client.createdAt}
                     </div>
                   </td>
                 </tr>

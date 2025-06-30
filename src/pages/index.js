@@ -12,7 +12,7 @@ export default function Home() {
   const router = useRouter();
 
   const handleSubmit = (values) => {
-    if ((values.nom == "momo") | (values.password == "momo")) {
+    if ((values.nom == "user") | (values.password == "user")) {
       router.push("/clients");
     } else {
       alert("accès refusé, username ou passwoer erronè");
@@ -59,8 +59,8 @@ export default function Home() {
           </div>
           <div>
             Pour connecter:
-            <p>username : momo</p>
-            <p>password : momo</p>
+            <p>username : "user"</p>
+            <p>password : "user"</p>
           </div>
         </Form>
       </Formik>
