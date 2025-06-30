@@ -1,27 +1,39 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { Formik, Field, Form, ErrorMessage } from "formik";
+import React from "react";
+import { Formik, Field, Form } from "formik";
 import Page from "../components/Page";
 import { useAppContext } from "../components/AppContext";
+import { formatLongDateTime } from "../components/Date";
+import { useRouter } from "next/router";
 
 const initialValues = {
   nom: "",
   email: "",
   telephone: "",
   adresse: "",
-  remarque: "",
+  historique: "",
+  createdAt: formatLongDateTime(Date.now()),
 };
 
 const AddClient = () => {
-  const { clients, setClients, updateClients } = useAppContext();
-  console.log(clients);
+  const router = useRouter();
+
+  const { updateClients } = useAppContext();
 
   const handleSubmit = (values) => {
-    updateClients(values);
+    updateClients({
+      nom: values.nom,
+      email: values.email,
+      telephone: values.telephone,
+      adresse: values.adresse,
+      historique: values.historique,
+      createdAt: formatLongDateTime(Date.now()),
+    });
+    router.push("/clients");
   };
 
   return (
     <Page>
-      <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-b from-gray-100 to-gray-500  rounded-md border-2 border-indigo-600 ">
+      <div className="w-full h-full flex flex-col items-center justify-center ">
         <h1 className="text-center text-4xl font-bold mb-5  bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-900 ">
           Ajouter un client
         </h1>
@@ -69,16 +81,17 @@ const AddClient = () => {
                 />
               </div>
               <div className="flex flex-col">
-                <label>remarque:</label>
+                <label>historique:</label>
                 <Field
-                  type="text"
-                  id="remarque"
-                  name="remarque"
-                  className="border-2 border-black px-2 rounded"
+                  as="textarea"
+                  rows={3}
+                  name="historique"
+                  className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  placeholder="historique"
                 />
               </div>
 
-              <div className="flex gap-3 my-3">
+              <div className="flex items-center justify-between gap-3 my-3">
                 <button
                   type="submit"
                   className="p-2 text font-bold text-white bg-blue-500 active:bg-blue-400 rounded"
@@ -87,22 +100,12 @@ const AddClient = () => {
                 </button>
 
                 <a
-                  href="/"
-                  // type="button"
+                  href="/clients"
                   onClick={resetForm}
                   className="hover:underline"
                 >
                   annuler{" "}
                 </a>
-              </div>
-              <div className="p-5 w-64">
-                <ol>
-                  {clients.map((client) => (
-                    <li className="border-b border-black" key={client}>
-                      {client.nom.toUpperCase()}
-                    </li>
-                  ))}
-                </ol>
               </div>
             </Form>
           )}

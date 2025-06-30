@@ -1,7 +1,5 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import Link from "next/link";
-import Connecion from "./conexion";
 import Page from "../components/Page";
 import { Field, Form, Formik } from "formik";
 import { useAppContext } from "../components/AppContext";
@@ -14,7 +12,10 @@ const Clients = () => {
   const router = useRouter();
 
   const [clients2, setClients2] = useState([]);
-  const { clients, setClients, setHrefClient } = useAppContext();
+  const { clients, setHrefClient } = useAppContext();
+  const [clientAffiche, setClientAffiche] = useState([]);
+  const [isActive, setIsActive] = useState(false);
+  const [nomSerch, setNomSerch] = useState("");
   useEffect(() => {
     setClients2(clients);
   }, [setClients2]);
@@ -23,58 +24,63 @@ const Clients = () => {
     const nom = value.currentTarget.getAttribute("data-id");
     setHrefClient(nom);
     router.push(`/client`);
-
-    console.log(nom);
   };
   const handelFilter = (nom1) => {
-    console.log(clients2);
+    setNomSerch(nom1);
+
     clients2.map((item) => {
       if (item.nom == nom1.nom1) {
         const client1 = item;
-        console.log(client1);
-        clients2.filter((cloent) => cloent !== client1);
-        console.log(clients2);
+        setClientAffiche([client1]);
+        setIsActive(true);
       } else {
-        console.log("false");
+        console.log("no client");
       }
       return;
     });
-    // ;
   };
 
-  if (clients) {
-    console.log("true");
-  }
+  const handleClearSearch = () => {
+    setIsActive(false);
+    setNomSerch("");
+  };
 
   return (
     <Page>
-      <div className="h-fit bg-base-200 p-5 rounded-xl w-full">
-        <div className="flex justify-between ">
+      <div className="h-full p-5  w-full ">
+        <div className="md:flex-row-reverse md:flex md:justify-between md:py-10 pb-5 ">
+          <div className="w-full flex justify-between">
+            <div className="text-white">.</div>
+            <a
+              className="order-last p-2 h-10 flex-end text font-bold text-white bg-blue-600 hover:bg-blue-500 active:bg-blue-400 rounded"
+              href="/add-client"
+            >
+              Ajouter un client
+            </a>
+          </div>
           <div>
-            <h2 className="badge badge-accent">Liste des clients</h2>
+            <h2 className="text-xl text-blue-600">Liste des clients</h2>
             <div>
               <Formik onSubmit={handelFilter} initialValues={initialValue}>
-                <Form>
+                <Form className="flex gap-2">
                   <Field
-                    className=" block w-full rounded-md border-0 bg-white py-1.5 pl-10 pr-3 text-gray-900 focus:ring-2 focus:bg-white focus:ring-offset-2 focus:ring-offset-indigo-600 sm:text-sm sm:leading-6"
+                    className="  w-full rounded-md border-0 bg-white py-1.5 pl-10 pr-3 text-gray-900 focus:ring-2 focus:bg-white focus:ring-offset-2 focus:ring-offset-indigo-600 sm:text-sm sm:leading-6"
                     placeholder="Search (entrer le nom du client)"
-                    type="search"
+                    // type="search"
                     name="nom1"
                   />
-
-                  <button
-                    type="button"
-                    onClick={handelFilter}
-                    className="absolute bottom-1.5 right-3 tex font-bold text-gray-500 bg-gray-100 px-1 rounded-full "
-                  >
-                    x{/* <BiX className="w-5 h-5" /> */}
-                  </button>
+                  {nomSerch ? (
+                    <button
+                      type="button"
+                      onClick={handleClearSearch}
+                      className="p-2 font-bold text-gray-500 bg-gray-200  rounded-full "
+                    >
+                      X
+                    </button>
+                  ) : null}
                 </Form>
               </Formik>
             </div>
-          </div>
-          <div>
-            <a href="/add-client">Ajouter un clisnt</a>
           </div>
         </div>
 
@@ -90,7 +96,7 @@ const Clients = () => {
               </tr>
             </thead>
             <tbody className="w-full ">
-              {clients2.map((client) => (
+              {(isActive ? clientAffiche : clients2).map((client) => (
                 <tr
                   key={client.nom}
                   data-id={client.nom}

@@ -1,33 +1,21 @@
-import Page from "../components/Page";
-import React, { useState } from "react";
+import React from "react";
 import { useRouter } from "next/router";
 
-import { Formik, Field, Form, ErrorMessage } from "formik";
+import { Formik, Field, Form } from "formik";
 
 const initialValues = {
-  username: "momo",
-  password: "momo",
+  username: "",
+  password: "",
 };
 
 export default function Home() {
   const router = useRouter();
 
-  // return (
-  //   <Page>
-  //     <PageDacueil />
-  //   </Page>
-  // );
-  const [clients, setClients] = useState([]);
-  console.log(clients);
-
   const handleSubmit = (values) => {
-    console.log(values);
-
     if ((values.nom == "momo") | (values.password == "momo")) {
       router.push("/clients");
     } else {
       alert("accès refusé, username ou passwoer erronè");
-      console.error("accès refusé");
     }
   };
 
@@ -69,14 +57,13 @@ export default function Home() {
               submit{" "}
             </button>
           </div>
-          <di>
-            pour connecter:
+          <div>
+            Pour connecter:
             <p>username : momo</p>
             <p>password : momo</p>
-          </di>
+          </div>
         </Form>
       </Formik>
-      {/* <a href="/test-localstorage">testLoaclstorage</a> */}
     </div>
   );
 }
